@@ -1,0 +1,46 @@
+<h1>
+  <% if @task.completed %>
+    <span class="glyphicon glyphicon-check"></span>
+  <% else %>
+    <%= link_to completed_task_path(@task, task: { completed: true } ), method: "patch", remote: true do %>
+      <span id="task_<%= @task.id %>_completed" class="glyphicon glyphicon-unchecked"></span>
+    <% end %>
+  <% end %>
+  <%= @task.title %>
+  <span class="label label-info pull-right"><%= @task.priority.capitalize %></span>
+</h1>
+<hr/>
+<div class="well">
+  <dl class="dl-horizontal">
+    <dt>Title</dt>
+    <dd><%= @task.title %></dd>
+    <br/>
+    <dt>Note</dt>
+    <dd><%= @task.note %></dd>
+    <br/>
+    <dt>Due date</dt>
+    <dd><%= format_date(@task.due_date) %></dd>
+    <br/>
+    <dt>Priority</dt>
+    <dd><%= @task.priority.capitalize %></dd>
+    <br/>
+    <dt>Assigned to</dt>
+    <dd><%= @task.assignee.username %></dd>
+    <br/>
+    <dt>Completed</dt>
+    <dd id="task_<%= @task.id %>_completed_field">
+      <% if @task.completed %>
+        Yes
+      <% else %>
+        No
+      <% end %>
+    </dd>
+    <br/>
+    <dt>Created by</dt>
+    <dd><%= @task.creator.username %></dd>
+  </dl>
+</div>
+
+<% if (current_user == @task.creator or current_user == @task.assignee) %>
+  <%=link_to "Edit task", edit_task_path(@task), class: "btn btn-primary" %>
+<% end %>

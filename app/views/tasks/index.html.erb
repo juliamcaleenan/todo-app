@@ -1,0 +1,40 @@
+<h1>To do list</h1>
+<p class="lead"><%= @title %></p>
+
+<% unless @tasks.select { |task| task.due_date < Date.today }.empty? %>
+  <ul class="list-group">
+    <li class="list-group-item list-group-item-danger">Overdue</li>
+    <% @tasks.select { |task| task.due_date < Date.today }.each do |task| %>
+      <%= render 'task', task: task %>
+    <% end %>
+  </ul>
+<% end %>
+
+<% unless @tasks.select { |task| task.due_date == Date.today }.empty? %>
+  <ul class="list-group">
+    <li class="list-group-item list-group-item-info">Due today</li>
+    <% @tasks.select { |task| task.due_date == Date.today }.each do |task| %>
+      <%= render 'task', task: task %>
+    <% end %>
+  </ul>
+<% end %>
+
+<% unless @tasks.select { |task| task.due_date == Date.tomorrow }.empty? %>
+  <ul class="list-group">
+    <li class="list-group-item list-group-item-info">Due tomorrow</li>
+    <% @tasks.select { |task| task.due_date == Date.tomorrow }.each do |task| %>
+      <%= render 'task', task: task %>
+    <% end %>
+  </ul>
+<% end %>
+
+<% unless @tasks.select { |task| task.due_date > Date.tomorrow }.empty? %>
+  <ul class="list-group">
+    <li class="list-group-item list-group-item-info">Due after tomorrow</li>
+    <% @tasks.select { |task| task.due_date > Date.tomorrow }.each do |task| %>
+      <%= render 'task', task: task %>
+    <% end %>
+  </ul>
+<% end %>
+
+

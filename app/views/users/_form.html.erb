@@ -1,0 +1,29 @@
+<%= render "shared/errors", obj: @user %>
+
+<div class="well">
+  <%= form_for @user, html: { class: "form-horizontal" } do |f| %>
+    <div class="form-group">
+      <%= f.label :username, class: "col-xs-2 control-label" %>
+      <div class="col-xs-10">
+        <%= f.text_field :username, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :password, class: "col-xs-2 control-label" %>
+      <div class="col-xs-10">
+        <%= f.password_field :password, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :time_zone, class: "col-xs-2 control-label" %>
+      <div class="col-xs-10">
+        <%= f.time_zone_select :time_zone, [ ActiveSupport::TimeZone['London'], ActiveSupport::TimeZone['Eastern Time (US & Canada)'], ActiveSupport::TimeZone['Central Time (US & Canada)'], ActiveSupport::TimeZone['Pacific Time (US & Canada)'] ], {}, { class: "form-control" } %>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-xs-offset-2 col-xs-10">
+        <%= f.submit @user.new_record? ? "Register" : "Update details", class: "btn btn-primary" %>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,52 @@
+<%= render "shared/errors", obj: @task %>
+
+<div class="well">
+  <%= form_for @task, html: { class: "form-horizontal" } do |f| %>
+    <div class="form-group">
+      <%= f.label :title, class: "col-xs-2 control-label" %>
+      <div class="col-xs-10">
+        <%= f.text_field :title, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :note, class: "col-xs-2 control-label" %>
+      <div class="col-xs-10">
+        <%= f.text_area :note, class: "form-control", rows: 5 %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :due_date, class: "col-xs-2 control-label" %>
+      <div class="col-xs-10">
+        <%= f.date_select :due_date, {}, { class: "form-control" } %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :priority, class: "col-xs-2 control-label" %>
+      <div class="col-xs-10">
+        <div class="radio-inline"><label><%= f.radio_button :priority, "high" %>High</label></div>
+        <div class="radio-inline"><label><%= f.radio_button :priority, "medium" %>Medium</label></div>
+        <div class="radio-inline"><label><%= f.radio_button :priority, "low" %>Low</label></div>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :assigned_to, class: "col-xs-2 control-label" %>
+      <div class="col-xs-10">
+        <%= f.collection_select :assigned_to, User.order(:username), :id, :username, @task.new_record? ? { selected: current_user.id } : {}, { class: "form-control" } %>
+      </div>
+    </div>
+    <% unless @task.new_record? %>
+      <div class="form-group">
+        <%= f.label :completed, class: "col-xs-2 control-label" %>
+        <div class="col-xs-10">
+          <div class="radio-inline"><label><%= f.radio_button :completed, true %>Yes</label></div>
+          <div class="radio-inline"><label><%= f.radio_button :completed, false %>No</label></div>
+        </div>
+      </div>
+    <% end %>
+    <div class="form-group">
+      <div class="col-xs-offset-2 col-xs-10">
+        <%= f.submit @task.new_record? ? "Create task" : "Update task", class: "btn btn-primary" %>
+      </div>
+    </div>
+  <% end %>
+</div>

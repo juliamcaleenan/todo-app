@@ -1,0 +1,58 @@
+<!-- Brand and toggle get grouped for better mobile display -->
+<div class="navbar-header">
+  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+    <span class="sr-only">Toggle navigation</span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+  <%= link_to 'To Do!', logged_in? ? outstanding_tasks_path : root_path, class: "navbar-brand" %>
+</div>
+
+<!-- Collect the nav links, forms, and other content for toggling -->
+<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+  <% if logged_in? %>
+    <ul class="nav navbar-nav">
+      <li><%= link_to "New task", new_task_path %></li>
+      <li class="dropdown">
+        <%= link_to "", class: "dropdown-toggle", "data-toggle" => "dropdown" do %>
+          Tasks <span class="caret"></span>
+        <% end %>
+        <ul class="dropdown-menu" role="menu">
+          <li><%= link_to "Created by #{current_user.username}", created_tasks_path %></li>
+          <li><%= link_to "Assigned to #{current_user.username}", assigned_tasks_path %></li>
+          <li class="divider"></li>
+          <li><%= link_to "All outstanding tasks", outstanding_tasks_path %></li>
+          <li><%= link_to "All completed tasks", completed_tasks_path %></li>
+          <li><%= link_to "All tasks", tasks_path %></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <%= link_to "", class: "dropdown-toggle", "data-toggle" => "dropdown" do %>
+          <%= current_user.username %> <span class="caret"></span>
+        <% end %>
+        <ul class="dropdown-menu" role="menu">
+          <li><%= link_to "View profile", user_path(current_user) %></li>
+          <li><%= link_to "Edit profile", edit_user_path(current_user) %></li>
+          <li class="divider"></li>
+          <li><%= link_to "Log out", logout_path %></li>
+        </ul>
+      </li>
+    </ul>
+    <div class="navbar-form navbar-right">
+      <%= link_to 'Log out', logout_path, class: "btn btn-primary" %>
+    </div>
+  <% else %>
+    <%= form_tag '/login', class: "navbar-form navbar-right" do %>
+      <div class="form-group">
+        <%= text_field_tag :username, params[:username] || "Username", class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= password_field_tag :password, params[:password] || "Password", class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= submit_tag "Log in", class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  <% end %>
+</div><!-- /.navbar-collapse -->

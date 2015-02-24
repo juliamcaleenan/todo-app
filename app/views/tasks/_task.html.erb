@@ -1,0 +1,14 @@
+<li class="list-group-item">
+  <% if task.completed %>
+    <span class="glyphicon glyphicon-check"></span>
+  <% else %>
+    <%= link_to completed_task_path(task, task: { completed: true } ), method: "patch", remote: true do %>
+      <span id="task_<%= task.id %>_completed" class="glyphicon glyphicon-unchecked"></span>
+    <% end %>
+  <% end %>
+  &nbsp&nbsp
+  <%= link_to task.title, task_path(task) %>&nbsp
+  <span class="text-muted"><em> assigned to <%= task.assignee.username %></em></span>
+  <span class="badge"><%= task.priority.capitalize %></span>
+</li>
+
