@@ -1,0 +1,20 @@
+<h1>Group: <%= @group.name %></h1>
+<hr/>
+<div class="well">
+  <dl class="dl-horizontal">
+    <dt>Name</dt>
+    <dd><%= @group.name %></dd>
+    <br/>
+    <dt>Created by</dt>
+    <dd><%= @group.creator.username %></dd>
+    <br/>
+    <dt><%= "Member".pluralize(@group.users.count) %></dt>
+    <% @group.users.order(:username).each do |user| %>
+      <dd><%= user.username %></dd>
+    <% end %>
+  </dl>
+</div>
+
+<% if current_user == @group.creator %>
+  <%=link_to "Edit group", edit_group_path(@group), class: "btn btn-primary" %>
+<% end %>

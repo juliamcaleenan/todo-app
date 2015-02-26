@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
 
   has_many :tasks
+  has_many :user_groups
+  has_many :groups, through: :user_groups
 
   has_secure_password validations: false
   validates :username, presence: true, uniqueness: true

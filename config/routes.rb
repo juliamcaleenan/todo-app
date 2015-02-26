@@ -17,7 +17,14 @@ Rails.application.routes.draw do
       patch 'completed', to: 'tasks#mark_completed'
     end
   end
+
   resources :users, only: [:show, :create, :edit, :update]
+  resources :groups, only: [:show, :new, :create, :edit, :update] do
+    collection do
+      get 'join', to: 'groups#join_new'
+      post 'join', to: 'groups#join_create'
+    end
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

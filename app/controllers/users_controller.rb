@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   before_action :require_same_user, only: [:edit, :update]
 
   def show
+    @groups = @user.groups
   end
 
   def new

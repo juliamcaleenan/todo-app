@@ -1,10 +1,24 @@
-<h1><%= @user.username %></h1>
+<h1>Profile: <%= @user.username %></h1>
 <hr/>
 <div class="well">
   <dl class="dl-horizontal">
     <dt>Username</dt>
     <dd><%= @user.username %></dd>
+    <br/>
     <dt>Time zone</dt>
     <dd><%= @user.time_zone %></dd>
   </dl>
 </div>
+
+<ul class="list-group">
+  <li class="list-group-item list-group-item active">Groups</li>
+  <% @groups.order(:name).each do |group| %>
+    <li class="list-group-item">
+      <%= link_to group.name, group_path(group) %>&nbsp
+      <span class="text-muted"><em> created by <%= group.creator.username %></em></span>
+      <% if current_user == group.creator %>
+        <span class="pull-right">[<%= link_to "edit group", edit_group_path(group) %>]</span>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
