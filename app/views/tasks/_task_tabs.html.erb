@@ -1,0 +1,26 @@
+<div role="tabpanel">
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#outstanding" aria-controls="outstanding" role="tab" data-toggle="tab">Outstanding tasks</a></li>
+    <li role="presentation"><a href="#completed" aria-controls="completed" role="tab" data-toggle="tab">Completed tasks</a></li>
+    <li role="presentation"><a href="#all" aria-controls="all" role="tab" data-toggle="tab">All tasks</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="outstanding">
+      <br/>
+      <%= render 'tasks/task_list_by_date', tasks: @tasks_outstanding %>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="completed">
+      <br/>
+      <%= render 'tasks/task_list', tasks: @tasks_completed %>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="all">
+      <br/>
+      <%= render 'tasks/task_list', tasks: @tasks %>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,6 @@
+<ul class="list-group">
+  <li class="list-group-item list-group-item-success">Tasks by due date</li>
+  <% tasks.reverse.each do |task| %>
+    <%= render 'tasks/task', task: task, show_due_date: true %>
+  <% end %>
+</ul>

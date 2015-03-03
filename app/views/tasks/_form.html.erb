@@ -29,9 +29,16 @@
       </div>
     </div>
     <div class="form-group">
+      <%= f.label :group_id, "Group", class: "col-xs-2 control-label" %>
+      <div class="col-xs-10">
+        <%= f.collection_select :group_id, current_user.groups.order(:name), :id, :name, { include_blank: "None" }, { class: "form-control", id: "group_select" } %>
+        <span class="text-muted">&nbsp&nbsp&nbspIf <em>None</em> is selected, the task will be saved to your personal list</span>
+      </div>
+    </div>
+    <div class="form-group">
       <%= f.label :assigned_to, class: "col-xs-2 control-label" %>
       <div class="col-xs-10">
-        <%= f.collection_select :assigned_to, User.order(:username), :id, :username, @task.new_record? ? { selected: current_user.id } : {}, { class: "form-control" } %>
+        <%= f.collection_select :assigned_to, @selected_users, :id, :username, {}, { class: "form-control", id: "users_select" } %>
       </div>
     </div>
     <% unless @task.new_record? %>
@@ -50,3 +57,17 @@
     </div>
   <% end %>
 </div>
+
+<script>
+  $(document).ready(function() {
+    $('#group_select').change(function() {
+      $.ajax({
+        url: "<%= update_assignees_tasks_path %>",
+        data: {
+          group_id : $('#group_select').val()
+        },
+        dataType: "script"
+      });
+    });
+  });
+</script>

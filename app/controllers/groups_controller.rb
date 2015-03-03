@@ -2,8 +2,16 @@ class GroupsController < ApplicationController
   before_action :require_user
   before_action :set_group, only: [:show, :edit, :update]
   before_action :require_creator, only: [:edit, :update]
+  before_action :require_member, only: [:show]
+
+  def index
+    @groups = current_user.groups
+  end
 
   def show
+    @tasks = @group.tasks
+    set_outstanding_and_completed_tasks
+    @show_assignee = true
   end
 
   def new
@@ -63,10 +71,14 @@ class GroupsController < ApplicationController
   end 
 
   def set_group
-    @group = Group.find(params[:id])
+    @group = Group.find_by(slug: params[:id])
   end
 
   def require_creator
     access_denied unless logged_in? and @group.creator == current_user
+  end
+
+  def require_member
+    access_denied unless logged_in? and @group.users.include?(current_user)
   end
 end

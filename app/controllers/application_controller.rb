@@ -22,6 +22,11 @@ class ApplicationController < ActionController::Base
 
   def access_denied
     flash[:error] = "You do not have permission to perform that action"
-    redirect_to outstanding_tasks_path
+    redirect_to tasks_path
+  end
+
+  def set_outstanding_and_completed_tasks
+    @tasks_outstanding = @tasks.select { |task| !task.completed }
+    @tasks_completed = @tasks.select { |task| task.completed }
   end
 end

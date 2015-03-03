@@ -8,10 +8,9 @@ Rails.application.routes.draw do
 
   resources :tasks, except: :destroy do
     collection do
-      get 'created'
+      get 'personal'
       get 'assigned'
-      get 'completed'
-      get 'outstanding'
+      get 'update_assignees', to: 'tasks#update_assignees'
     end
     member do
       patch 'completed', to: 'tasks#mark_completed'
@@ -19,7 +18,7 @@ Rails.application.routes.draw do
   end
 
   resources :users, only: [:show, :create, :edit, :update]
-  resources :groups, only: [:show, :new, :create, :edit, :update] do
+  resources :groups, except: :destroy do
     collection do
       get 'join', to: 'groups#join_new'
       post 'join', to: 'groups#join_create'

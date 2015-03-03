@@ -3,11 +3,16 @@
     <span class="glyphicon glyphicon-check"></span>
   <% else %>
     <%= link_to completed_task_path(@task, task: { completed: true } ), method: "patch", remote: true do %>
-      <span id="task_<%= @task.id %>_completed" class="glyphicon glyphicon-unchecked"></span>
+      <span id="task_<%= @task.slug %>_completed" class="glyphicon glyphicon-unchecked"></span>
     <% end %>
   <% end %>
   <%= @task.title %>
-  <span class="label label-info pull-right"><%= @task.priority.capitalize %></span>
+  <div class="pull-right">
+    <% unless @task.group.nil? %>
+      <span class="label label-default"><%= @task.group.name %></span>
+    <% end %>
+    <span class="label label-info"><%= @task.priority.capitalize %></span>
+  </div>
 </h1>
 <hr/>
 <div class="well">
@@ -24,11 +29,18 @@
     <dt>Priority</dt>
     <dd><%= @task.priority.capitalize %></dd>
     <br/>
+    <dt>Group</dt>
+    <% if @task.group.nil? %>
+      <dd>None</dd>
+    <% else %>
+      <dd><%= @task.group.name %></dd>
+    <% end %>
+    <br/>
     <dt>Assigned to</dt>
     <dd><%= @task.assignee.username %></dd>
     <br/>
     <dt>Completed</dt>
-    <dd id="task_<%= @task.id %>_completed_field">
+    <dd id="task_<%= @task.slug %>_completed_field">
       <% if @task.completed %>
         Yes
       <% else %>
