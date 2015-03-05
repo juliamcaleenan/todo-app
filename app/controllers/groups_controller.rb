@@ -9,7 +9,7 @@ class GroupsController < ApplicationController
   end
 
   def show
-    @tasks = @group.tasks
+    @tasks = @group.tasks.order(:due_date)
     set_outstanding_and_completed_tasks
     @show_assignee = true
   end
