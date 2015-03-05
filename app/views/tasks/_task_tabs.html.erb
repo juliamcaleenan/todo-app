@@ -1,26 +1,24 @@
-<div role="tabpanel">
-
-  <!-- Nav tabs -->
-  <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#outstanding" aria-controls="outstanding" role="tab" data-toggle="tab">Outstanding tasks</a></li>
-    <li role="presentation"><a href="#completed" aria-controls="completed" role="tab" data-toggle="tab">Completed tasks</a></li>
-    <li role="presentation"><a href="#all" aria-controls="all" role="tab" data-toggle="tab">All tasks</a></li>
+<div>
+  <ul class="nav nav-tabs">
+    <li class="<%= "active" if params[:tab].nil? %>">
+      <%= link_to "Outstanding tasks" %>
+    </li>
+    <li class="<%= "active" if params[:tab] == "completed" %>">
+      <%= link_to "Completed tasks", params.merge(tab: "completed") %>
+    </li>
+    <li class="<%= "active" if params[:tab] == "all" %>">
+      <%= link_to "All tasks", params.merge(tab: "all") %>
+    </li>
   </ul>
 
-  <!-- Tab panes -->
   <div class="tab-content">
-    <div role="tabpanel" class="tab-pane active" id="outstanding">
-      <br/>
+    <br/>
+    <% if params[:tab].nil? %>
       <%= render 'tasks/task_list_by_date', tasks: @tasks_outstanding %>
-    </div>
-    <div role="tabpanel" class="tab-pane" id="completed">
-      <br/>
+    <% elsif params[:tab] == "completed" %>
       <%= render 'tasks/task_list', tasks: @tasks_completed %>
-    </div>
-    <div role="tabpanel" class="tab-pane" id="all">
-      <br/>
+    <% elsif params[:tab] == "all" %>
       <%= render 'tasks/task_list', tasks: @tasks %>
-    </div>
+    <% end %>
   </div>
-
 </div>
